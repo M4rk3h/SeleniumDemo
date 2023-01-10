@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
 
@@ -14,10 +15,13 @@ namespace CreditCards.UITests
         private const string ApplyUrl = "http://localhost:44108/Apply";
 
         [Fact]
-        public void _6BeInitiatedFromHomePage_NewLowRate()
+        public void _1BeInitiatedFromHomePage_NewLowRate()
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
@@ -35,20 +39,22 @@ namespace CreditCards.UITests
         }
 
         [Fact]
-        public void _7BeInitiatedFromHomePage_EasyApplication()
+        public void _2BeInitiatedFromHomePage_EasyApplication()
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
                 IWebElement rightCarousel = driver.FindElement(By.CssSelector("[data-slide='next']"));
                 rightCarousel.Click();
-                // Wait 1 second
-                DemoHelper.Pause(1000);
-
-                // Grab ApplyLowRate button
-                IWebElement applyLink = driver.FindElement(By.LinkText("Easy: Apply Now!"));
+                //Dynamic Pause for atleast 1 second
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+                // Wait until the Element we want (Easy Apply Now, second img)
+                IWebElement applyLink = wait.Until((d) => d.FindElement(By.LinkText("Easy: Apply Now!")));
                 // Click on the button
                 applyLink.Click();
 
@@ -60,10 +66,12 @@ namespace CreditCards.UITests
         }
 
         [Fact]
-        public void _8BeInitiatedFromHomePage_CustomerService()
+        public void _3BeInitiatedFromHomePage_CustomerService()
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
@@ -89,10 +97,12 @@ namespace CreditCards.UITests
         }
 
         [Fact]
-        public void _9BeInitiatedFromHomePage_RandomGreeting()
+        public void _4BeInitiatedFromHomePage_RandomGreeting()
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
@@ -105,5 +115,43 @@ namespace CreditCards.UITests
                 Assert.Equal(ApplyUrl, driver.Url);
             }
         }
+
+        [Fact]
+        public void _5BeInitiatedFromHomePage_RandomGreeting_XPath()
+        {
+            using (IWebDriver driver = new FirefoxDriver())
+            {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl(HomeUrl);
+                DemoHelper.Pause();
+
+                IWebElement randomPartial = driver.FindElement(By.XPath("//a[text()[contains(.,'- Apply Now!')]]"));
+                randomPartial.Click();
+                // Wait 1 second
+                DemoHelper.Pause();
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                Assert.Equal(ApplyUrl, driver.Url);
+            }
+        }
+
+        [Fact]
+        public void _6BIFHP_EA_PC()
+        {
+            using (IWebDriver driver = new FirefoxDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+                DemoHelper.Pause();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(11));
+
+                //IWebElement applyLink = wait.Until(ExpectedConditions)
+                // TODO: https://stackoverflow.com/questions/49866334/c-sharp-selenium-expectedconditions-is-obsolete
+
+            }
+        }
+
+
     }
 }

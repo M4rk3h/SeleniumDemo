@@ -19,11 +19,11 @@ namespace CreditCards.UITests
 
         public void _1LoadApplicationPage()
         {
-            // create an instance of a browser (FirefoxDriver, ChromeDriver)
+            // create an instance of a browser (ChromeDriver & FirefoxDriver)
             using (IWebDriver driver = new FirefoxDriver())
             {
-                // Open Chrome Maximized
-                //driver.Manage().Window.Maximize();
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Pause the browser
@@ -42,8 +42,8 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
-                // Open Chrome Maximized
-                //driver.Manage().Window.Maximize();
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Pause the browser
@@ -64,8 +64,8 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
-                // Open Chrome Maximized
-                //driver.Manage().Window.Maximize();
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
 
@@ -94,6 +94,9 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+
                 driver.Navigate().GoToUrl(AboutUrl);
                 DemoHelper.Pause();
 
@@ -123,6 +126,9 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new FirefoxDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
