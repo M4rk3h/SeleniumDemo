@@ -87,5 +87,23 @@ namespace CreditCards.UITests
                 Assert.Equal(ApplyUrl, driver.Url);
             }
         }
+
+        [Fact]
+        public void _9BeInitiatedFromHomePage_RandomGreeting()
+        {
+            using (IWebDriver driver = new FirefoxDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+                DemoHelper.Pause();
+
+                IWebElement randomPartial = driver.FindElement(By.PartialLinkText("- Apply Now!"));
+                randomPartial.Click();
+                // Wait 1 second
+                DemoHelper.Pause();
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                Assert.Equal(ApplyUrl, driver.Url);
+            }
+        }
     }
 }
