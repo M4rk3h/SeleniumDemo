@@ -19,8 +19,8 @@ namespace CreditCards.UITests
 
         public void _1LoadApplicationPage()
         {
-            // create an instance of a browser (ChromeDriver & FirefoxDriver)
-            using (IWebDriver driver = new FirefoxDriver())
+            // create an instance of a browser (ChromeDriver & ChromeDriver)
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -40,7 +40,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _2ReloadHomePage()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -62,7 +62,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _3ReloadHomePageOnBack()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -92,7 +92,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _4ReloadHomePageOnForward()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -124,7 +124,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _5DisplayProductsAndRates()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();

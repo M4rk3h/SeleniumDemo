@@ -17,7 +17,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _1BeInitiatedFromHomePage_NewLowRate()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -41,7 +41,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _2BeInitiatedFromHomePage_EasyApplication()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -68,7 +68,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _3BeInitiatedFromHomePage_CustomerService()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -99,7 +99,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _4BeInitiatedFromHomePage_RandomGreeting()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -119,7 +119,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _5BeInitiatedFromHomePage_RandomGreeting_XPath()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
                 driver.Manage().Window.Maximize();
@@ -139,7 +139,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _6BIFHP_EA_PC()
         {
-            using (IWebDriver driver = new FirefoxDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
