@@ -139,16 +139,26 @@ namespace CreditCards.UITests
         [Fact]
         public void _6BIFHP_EA_PC()
         {
+
             using (IWebDriver driver = new ChromeDriver())
             {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(11));
 
-                //IWebElement applyLink = wait.Until(ExpectedConditions)
-                // TODO: https://stackoverflow.com/questions/49866334/c-sharp-selenium-expectedconditions-is-obsolete
+                // The below method is depreciated - source code copied into ExpectedConditions.cs
+                // from https://github.com/DotNetSeleniumTools/DotNetSeleniumExtras/blob/master/src/WaitHelpers/ExpectedConditions.cs
+                IWebElement applyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
 
+                applyLink.Click();
+
+                DemoHelper.Pause();
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                Assert.Equal(ApplyUrl, driver.Url);
             }
         }
 
