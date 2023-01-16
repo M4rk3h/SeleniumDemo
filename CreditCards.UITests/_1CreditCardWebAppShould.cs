@@ -138,6 +138,7 @@ namespace CreditCards.UITests
                 Assert.Equal("Easy Credit Card", firstProduct);
 
                 // TODO: check rest of product table (1:3)
+
                 
             }
         }
