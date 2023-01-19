@@ -78,6 +78,7 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
+                driver.Manage().Window.Maximize();
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Navigating to '{HomeUrl}'");
                 driver.Navigate().GoToUrl(HomeUrl);
                 
@@ -87,6 +88,7 @@ namespace CreditCards.UITests
                 //// <summary>
                 //// Function to check if element is found,
                 //// enabled and displayed = true
+                
                 //Func<IWebDriver, IWebElement> findEnabledAndVisible = delegate (IWebDriver d)
                 //{
                 //    var e = d.FindElement(By.ClassName("customer-service-apply-now"));
@@ -106,11 +108,10 @@ namespace CreditCards.UITests
                 
                 // Use built in function instead of bespoke (above)
                 IWebElement applyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("customer-service-apply-now")));
-                
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Found element Displayed={applyLink.Displayed} Enabled={applyLink.Enabled}");
-                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking element");
                 // Click on the button
                 applyLink.Click();
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking element");
 
                 DemoHelper.Pause();
 
