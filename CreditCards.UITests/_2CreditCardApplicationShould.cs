@@ -186,6 +186,73 @@ namespace CreditCards.UITests
             }
         }
 
+        [Fact]
+        public void _7BeSubmittedWhenValid()
+        {
 
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl(ApplyUrl);
+
+                IWebElement fNameField = driver.FindElement(By.Id("FirstName"));
+                fNameField.SendKeys("Mark");
+
+                IWebElement lNameField = driver.FindElement(By.Id("LastName"));
+                lNameField.SendKeys("Baber");
+
+                IWebElement fFlyerField = driver.FindElement(By.Id("FrequentFlyerNumber"));
+                fFlyerField.SendKeys("01633");
+
+                IWebElement ageField = driver.FindElement(By.Id("Age"));
+                ageField.SendKeys("30");
+
+                IWebElement GAIField = driver.FindElement(By.Id("GrossAnnualIncome"));
+                GAIField.SendKeys("50000");
+                DemoHelper.Pause();
+
+                IWebElement relationshipStatusField = driver.FindElement(By.Id("Married"));
+                relationshipStatusField.Click();
+                DemoHelper.Pause();
+
+                IWebElement howHeardField = driver.FindElement(By.Id("BusinessSource"));
+
+                SelectElement businessSource = new SelectElement(howHeardField);
+
+                Assert.Equal("I'd Rather Not Say", businessSource.SelectedOption.Text);
+
+                output.WriteLine("Get Attributes and Text from BusinessSource Dropdown:");
+                // Get all available options
+                foreach (IWebElement option in businessSource.Options)
+                {
+                    output.WriteLine($"Value: {option.GetAttribute("value")} || Text: {option.Text}");
+                }
+                // Click
+                howHeardField.Click();
+
+                // Select Option 3
+                IWebElement heardOption = driver.FindElement(By.XPath("//*[@id='BusinessSource']/option[3]"));
+                heardOption.Click();
+
+                IWebElement termsBox = driver.FindElement(By.Id("TermsAccepted"));
+                termsBox.Click();
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                Assert.Equal(ApplyUrl, driver.Url);
+
+                IWebElement subAppBtn = driver.FindElement(By.Id("SubmitApplication"));
+                subAppBtn.Click();
+                
+                DemoHelper.Pause();
+
+                Assert.Equal("Application Complete - Credit Cards", driver.Title);
+
+                
+                
+
+
+            }
+        }
     }
 }
