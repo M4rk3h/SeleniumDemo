@@ -186,6 +186,73 @@ namespace CreditCards.UITests
             }
         }
 
+        [Fact]
+        public void _7BeSubmittedWhenValid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl(ApplyUrl);
 
+                // Send FirstName
+                driver.FindElement(By.Id("FirstName")).SendKeys("Mark");
+                // Send LastName
+                driver.FindElement(By.Id("LastName")).SendKeys("Baber");
+                // Send FrequentFlyerNumber
+                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("01633");
+                // Send Age
+                driver.FindElement(By.Id("Age")).SendKeys("30");
+                // Send Income
+                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+                // Send Relationship Status
+                driver.FindElement(By.Id("Married")).Click();
+                // Create iWebElement for Dropdown
+                IWebElement howHeardField = driver.FindElement(By.Id("BusinessSource"));
+                //SelectElement Elements in Dropdown
+                SelectElement businessSource = new SelectElement(howHeardField);
+                // Assert the default (ensure we have selected correct dropdown)
+                Assert.Equal("I'd Rather Not Say", businessSource.SelectedOption.Text);
+                // Lets write what we found (Text / Value)
+                output.WriteLine("Get Attributes and Text from BusinessSource Dropdown:");
+                // Get all available options
+                foreach (IWebElement option in businessSource.Options)
+                {
+                    output.WriteLine($"*Value*: {option.GetAttribute("value")}  *Text*: {option.Text}");
+                }
+
+                //Assert the number of options
+                Assert.Equal(5, businessSource.Options.Count);
+                // Select Option via Value
+                businessSource.SelectByValue("Email");
+                DemoHelper.Pause();
+                // Select Option via Text
+                businessSource.SelectByText("Internet Search");
+                DemoHelper.Pause();
+                // Select by Index
+                businessSource.SelectByIndex(3);
+                DemoHelper.Pause();
+
+                driver.FindElement(By.Id("TermsAccepted")).Click();
+
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                Assert.Equal(ApplyUrl, driver.Url);
+
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+                DemoHelper.Pause();
+
+                Assert.StartsWith("Application Complete", driver.Title);
+                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
+                Assert.NotEmpty(driver.FindElement(By.Id("ReferenceNumber")).Text);
+                Assert.Equal("Mark Baber", driver.FindElement(By.Id("FullName")).Text);
+                Assert.Equal("30", driver.FindElement(By.Id("Age")).Text);
+                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
+                Assert.Equal("Married", driver.FindElement(By.Id("RelationshipStatus")).Text);
+                Assert.Equal("Word of Mouth", driver.FindElement(By.Id("BusinessSource")).Text);
+
+
+            }
+        }
     }
 }
