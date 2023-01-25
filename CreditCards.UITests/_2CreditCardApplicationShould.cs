@@ -225,22 +225,17 @@ namespace CreditCards.UITests
                 Assert.Equal(5, businessSource.Options.Count);
                 // Select Option via Value
                 businessSource.SelectByValue("Email");
-                DemoHelper.Pause();
                 // Select Option via Text
                 businessSource.SelectByText("Internet Search");
-                DemoHelper.Pause();
                 // Select by Index
                 businessSource.SelectByIndex(3);
-                DemoHelper.Pause();
 
                 driver.FindElement(By.Id("TermsAccepted")).Click();
-
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
 
                 driver.FindElement(By.Id("SubmitApplication")).Click();
-                DemoHelper.Pause();
 
                 Assert.StartsWith("Application Complete", driver.Title);
                 Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
@@ -250,8 +245,56 @@ namespace CreditCards.UITests
                 Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
                 Assert.Equal("Married", driver.FindElement(By.Id("RelationshipStatus")).Text);
                 Assert.Equal("Word of Mouth", driver.FindElement(By.Id("BusinessSource")).Text);
+            }
+        }
 
+        [Fact]
+        public void _8BeSubmittedWhenValidationErrorsCorrected()
+        {
+            // set some constants
+            const string firstName = "Mark";
+            const string invalidAge = "17";
+            const string validAge = "30";
 
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl(ApplyUrl);
+                driver.FindElement(By.Id("FirstName")).SendKeys(firstName);
+                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("01633");
+                driver.FindElement(By.Id("Age")).SendKeys(invalidAge);
+                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+                driver.FindElement(By.Id("Married")).Click();
+                IWebElement howHeardField = driver.FindElement(By.Id("BusinessSource"));
+                SelectElement businessSource = new SelectElement(howHeardField);
+                businessSource.SelectByIndex(3);
+                driver.FindElement(By.Id("TermsAccepted")).Click();
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+                DemoHelper.Pause();
+
+                // Assert validation failed
+                var validationErr = driver.FindElements(By.CssSelector(".validation-summary-errors > ul > li"));
+                Assert.Equal(2, validationErr.Count);
+                Assert.Equal("Please provide a last name", validationErr[0].Text);
+                Assert.Equal("You must be at least 18 years old", validationErr[1].Text);
+
+                // Fix validation errors
+                driver.FindElement(By.Id("LastName")).SendKeys("Baber");
+                driver.FindElement(By.Id("Age")).Clear();
+                driver.FindElement(By.Id("Age")).SendKeys(validAge);
+
+                // Resubmit form
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+
+                Assert.StartsWith("Application Complete", driver.Title);
+                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
+                Assert.NotEmpty(driver.FindElement(By.Id("ReferenceNumber")).Text);
+                Assert.Equal("Mark Baber", driver.FindElement(By.Id("FullName")).Text);
+                Assert.Equal("30", driver.FindElement(By.Id("Age")).Text);
+                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
+                Assert.Equal("Married", driver.FindElement(By.Id("RelationshipStatus")).Text);
+                Assert.Equal("Word of Mouth", driver.FindElement(By.Id("BusinessSource")).Text);
             }
         }
     }

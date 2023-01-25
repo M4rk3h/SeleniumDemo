@@ -1,7 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
 using Xunit;
-using System;
 using System.Collections.ObjectModel;
 
 namespace CreditCards.UITests
@@ -19,7 +20,8 @@ namespace CreditCards.UITests
 
         public void _1LoadApplicationPage()
         {
-            // create an instance of a browser (ChromeDriver & ChromeDriver)
+            // create an instance of a browser (ChromeDriver, FirefoxDriver & EdgeDriver)
+
             using (IWebDriver driver = new ChromeDriver())
             {
                 // Open Maximized
