@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
@@ -163,12 +162,12 @@ namespace CreditCards.UITests
         [Fact]
         public void _6BIFHP_EA_PC()
         {
-
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
+                // Go to Home
                 driver.Navigate().GoToUrl(HomeUrl);
+                // Minimize window
+                driver.Manage().Window.Minimize();
                 DemoHelper.Pause();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(11));

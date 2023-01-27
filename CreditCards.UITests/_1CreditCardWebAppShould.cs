@@ -1,9 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
-using Xunit;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
+using Xunit;
 
 namespace CreditCards.UITests
 {
@@ -18,18 +18,36 @@ namespace CreditCards.UITests
         [Fact]
         [Trait("Category", "Smoke")]
 
-        public void _1LoadApplicationPage()
+        public void _1LoadHomePage()
         {
             // create an instance of a browser (ChromeDriver, FirefoxDriver & EdgeDriver)
 
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
-                // Pause the browser
+                // Open Maximized
+                driver.Manage().Window.Maximize();
                 DemoHelper.Pause();
+                // Min
+                driver.Manage().Window.Minimize();
+                DemoHelper.Pause();
+                // Draw
+                driver.Manage().Window.Size = new System.Drawing.Size(300, 400);
+                DemoHelper.Pause();
+                // Move to Top Left (1,1)
+                driver.Manage().Window.Position = new System.Drawing.Point(1, 1);
+                DemoHelper.Pause();
+                // Move 
+                driver.Manage().Window.Position = new System.Drawing.Point(50, 50);
+                DemoHelper.Pause();
+                // Move 
+                driver.Manage().Window.Position = new System.Drawing.Point(100, 100);
+                DemoHelper.Pause();
+                // Move to Top Left (1,1)
+                driver.Manage().Window.FullScreen();
+                DemoHelper.Pause(5000);
+
                 // Check Title = String
                 Assert.Equal(HomeTitle, driver.Title);
                 // Check we're at the correct url
@@ -145,5 +163,54 @@ namespace CreditCards.UITests
                 Assert.Equal("17% APR", tableCells[5].Text);
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void _6ContactUsFooterTAB()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                DemoHelper.Pause();
+
+                driver.FindElement(By.Id("ContactFooter")).Click();
+                DemoHelper.Pause();
+
+                ReadOnlyCollection<string> getTabs = driver.WindowHandles;
+                string homePageTab = getTabs[0];
+                string contactTab = getTabs[1];
+                // switch to tab x
+                driver.SwitchTo().Window(contactTab);
+                DemoHelper.Pause();
+
+                Assert.EndsWith("/Home/Contact", driver.Url);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void _7NoLiveChatALERT()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+                // Open Maximized
+                driver.Manage().Window.Maximize();
+                DemoHelper.Pause();
+
+                driver.FindElement(By.Id("LiveChat")).Click();
+                DemoHelper.Pause();
+                // switch to alert
+                IAlert alert = driver.SwitchTo().Alert();
+                // check it is correct
+                Assert.Equal("Live chat is currently closed.", alert.Text);
+                DemoHelper.Pause();
+                // Accept alert
+                alert.Accept();
+            }
+        }
+
     }
 }
