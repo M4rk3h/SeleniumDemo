@@ -199,7 +199,6 @@ namespace CreditCards.UITests
                 // Open Maximized
                 driver.Manage().Window.Maximize();
                 DemoHelper.Pause();
-
                 driver.FindElement(By.Id("LiveChat")).Click();
                 DemoHelper.Pause();
                 // switch to alert
@@ -211,6 +210,5 @@ namespace CreditCards.UITests
                 alert.Accept();
             }
         }
-
     }
 }
