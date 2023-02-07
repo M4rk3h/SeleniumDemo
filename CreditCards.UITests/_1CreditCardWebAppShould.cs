@@ -20,7 +20,7 @@ namespace CreditCards.UITests
 
         public void _1LoadHomePage()
         {
-            // create an instance of a browser (ChromeDriver, FirefoxDriver & EdgeDriver)
+            // create an instance of a browser (ChromeDriver)
 
             using (IWebDriver driver = new ChromeDriver())
             {
