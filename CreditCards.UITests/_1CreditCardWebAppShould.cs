@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using ApprovalTests.Reporters;
+using ApprovalTests.Reporters.Windows;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -235,5 +237,53 @@ namespace CreditCards.UITests
                 Assert.Equal(HomeTitle, driver.Title);
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void _9NotDisplayCookieUseMessage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                // Go to Index
+                driver.Navigate().GoToUrl(HomeUrl);
+                // Create a cookie
+                driver.Manage().Cookies.AddCookie(new Cookie("acceptedCookies", "true"));
+                // Refresh the page
+                driver.Navigate().Refresh();
+                // return an emplty read only collection
+                ReadOnlyCollection<IWebElement> message = driver.FindElements(By.Id("CookiesBeingUsed"));
+                // Is the Message Empty?
+                Assert.Empty(message);
+                // Get the cookie named x
+                Cookie cookieValue = driver.Manage().Cookies.GetCookieNamed("acceptedCookies");
+                // Does the cookie from above = true
+                Assert.Equal("true", cookieValue.Value);
+
+                // remove cookie
+                driver.Manage().Cookies.DeleteCookieNamed("acceptedCookies");
+                driver.Navigate().Refresh();
+                // check cookies being used
+                Assert.NotNull(driver.FindElement(By.Id("CookiesBeingUsed")));
+            }
+        }
+
+        [Fact]
+        // TODO: Add ApprovalTests package and method.
+        public void _XRenderAboutPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(AboutUrl);
+
+                ITakesScreenshot screenie = (ITakesScreenshot)driver;
+
+                Screenshot screenshot = screenie.GetScreenshot();
+
+                screenshot.SaveAsFile("aboutpage.bmp", ScreenshotImageFormat.Bmp);
+            }
+        }
+
+        
+        
     }
 }
