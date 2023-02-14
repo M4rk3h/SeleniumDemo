@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.ObjectModel;
 using Xunit;
 
@@ -135,6 +136,7 @@ namespace CreditCards.UITests
                 Assert.Equal(HomeTitle, driver.Title);
                 Assert.Equal(HomeUrl, driver.Url);
 
+                // TODO: Load state from previously suspended application
                 // TODO: assert that page was reloaded.
                 string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
                 Assert.NotEqual(initialToken, reloadedToken);
@@ -191,7 +193,7 @@ namespace CreditCards.UITests
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _7NoLiveChatALERT()
+        public void _7AlertIfLiveChatClosed()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
@@ -212,5 +214,26 @@ namespace CreditCards.UITests
             }
         }
 
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void _8NotNavigateToAboutUsWhenCancelClicked()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+                driver.Manage().Window.Maximize();
+                DemoHelper.Pause();
+
+                driver.FindElement(By.Id("LearnAboutUs")).Click();
+                DemoHelper.Pause();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
+
+                alertBox.Dismiss();
+
+                Assert.Equal(HomeTitle, driver.Title);
+            }
+        }
     }
 }
