@@ -1,4 +1,5 @@
-﻿using ApprovalTests.Reporters;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using ApprovalTests.Reporters.Windows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -6,6 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using Xunit;
 
 namespace CreditCards.UITests
@@ -268,7 +270,7 @@ namespace CreditCards.UITests
         }
 
         [Fact]
-        // TODO: Add ApprovalTests package and method.
+        [UseReporter(typeof(BeyondCompareReporter))] //Switched fromBeyondCompare4Reporter to BeyondCompareReporter
         public void _XRenderAboutPage()
         {
             using (IWebDriver driver = new ChromeDriver())
@@ -280,6 +282,9 @@ namespace CreditCards.UITests
                 Screenshot screenshot = screenie.GetScreenshot();
 
                 screenshot.SaveAsFile("aboutpage.bmp", ScreenshotImageFormat.Bmp);
+
+                FileInfo file = new FileInfo("aboutpage.bmp");
+                Approvals.Verify(file);
             }
         }
 
