@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
@@ -9,14 +10,14 @@ namespace CreditCards.UITests
 {
     // Add Test
     [Trait("Category", "Applications")]
-    public class _2CreditCardApplicationShould
+    public class _03CreditCardApplicationShould
     {
         private const string HomeUrl = "http://localhost:44108/";
         private const string ApplyUrl = "http://localhost:44108/Apply";
 
         private readonly ITestOutputHelper output;
 
-        public _2CreditCardApplicationShould(ITestOutputHelper output)
+        public _03CreditCardApplicationShould(ITestOutputHelper output)
         {
             this.output = output;
         }
@@ -30,14 +31,14 @@ namespace CreditCards.UITests
                 driver.Manage().Window.Maximize();
 
                 driver.Navigate().GoToUrl(HomeUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 // Grab ApplyLowRate button
                 IWebElement applyLink = driver.FindElement(By.Name("ApplyLowRate"));
                 // Click on the button
                 applyLink.Click();
 
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -54,7 +55,7 @@ namespace CreditCards.UITests
                 driver.Manage().Window.Maximize();
 
                 driver.Navigate().GoToUrl(HomeUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 IWebElement rightCarousel = driver.FindElement(By.CssSelector("[data-slide='next']"));
                 rightCarousel.Click();
@@ -65,7 +66,7 @@ namespace CreditCards.UITests
                 // Click on the button
                 applyLink.Click();
 
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -112,7 +113,7 @@ namespace CreditCards.UITests
                 applyLink.Click();
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking element");
 
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -127,12 +128,12 @@ namespace CreditCards.UITests
                 // Open Maximized
                 driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 IWebElement randomPartial = driver.FindElement(By.PartialLinkText("- Apply Now!"));
                 randomPartial.Click();
                 // Wait 1 second
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -147,12 +148,12 @@ namespace CreditCards.UITests
                 // Open Maximized
                 driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 IWebElement randomPartial = driver.FindElement(By.XPath("//a[text()[contains(.,'- Apply Now!')]]"));
                 randomPartial.Click();
                 // Wait 1 second
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -168,7 +169,7 @@ namespace CreditCards.UITests
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Minimize window
                 driver.Manage().Window.Minimize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(11));
 
@@ -178,7 +179,7 @@ namespace CreditCards.UITests
 
                 applyLink.Click();
 
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
                 Assert.Equal(ApplyUrl, driver.Url);
@@ -270,7 +271,7 @@ namespace CreditCards.UITests
                 businessSource.SelectByIndex(3);
                 driver.FindElement(By.Id("TermsAccepted")).Click();
                 driver.FindElement(By.Id("SubmitApplication")).Click();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 // Assert validation failed
                 var validationErr = driver.FindElements(By.CssSelector(".validation-summary-errors > ul > li"));

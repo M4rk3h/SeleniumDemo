@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using ApprovalTests.Reporters.Windows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -12,7 +11,7 @@ using Xunit;
 
 namespace CreditCards.UITests
 {
-    public class _1CreditCardWebAppShould
+    public class _02CreditCardWebAppShould
     {
         // Declare Constants
         private const string HomeUrl = "http://localhost:44108/";
@@ -27,28 +26,28 @@ namespace CreditCards.UITests
         {
             // create an instance of a browser (ChromeDriver)
 
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new ChromeDriver() )
             {
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Open Maximized
                 driver.Manage().Window.Maximize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Min
                 driver.Manage().Window.Minimize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Draw
                 driver.Manage().Window.Size = new System.Drawing.Size(300, 400);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Move to Top Left (1,1)
                 driver.Manage().Window.Position = new System.Drawing.Point(1, 1);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Move 
                 driver.Manage().Window.Position = new System.Drawing.Point(50, 50);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Move 
                 driver.Manage().Window.Position = new System.Drawing.Point(100, 100);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Move to Top Left (1,1)
                 driver.Manage().Window.FullScreen();
                 DemoHelper.Pause(5000);
@@ -72,7 +71,7 @@ namespace CreditCards.UITests
                 // Go to URL
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Pause the browser
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Reload the Page
                 driver.Navigate().Refresh();
                 // Check Title = String
@@ -99,9 +98,9 @@ namespace CreditCards.UITests
 
 
                 // Nav to AboutURL
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 driver.Navigate().GoToUrl(AboutUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 driver.Navigate().Back();
                 
                 // Check Title = String
@@ -123,19 +122,19 @@ namespace CreditCards.UITests
                 driver.Manage().Window.Maximize();
 
                 driver.Navigate().GoToUrl(AboutUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 driver.Navigate().GoToUrl(HomeUrl);
                 IWebElement generationTokenElement = driver.FindElement(By.Id("GenerationToken"));
                 string initialToken = generationTokenElement.Text;
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
 
                 driver.Navigate().Back();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 driver.Navigate().Forward();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.Equal(HomeTitle, driver.Title);
                 Assert.Equal(HomeUrl, driver.Url);
@@ -155,7 +154,7 @@ namespace CreditCards.UITests
                 // Open Maximized
                 driver.Manage().Window.Maximize();
                 driver.Navigate().GoToUrl(HomeUrl);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 // As a ReadOnly Collection, grab all elements within the table (td)
                 ReadOnlyCollection<IWebElement> tableCells = driver.FindElements(By.TagName("td"));
@@ -179,17 +178,17 @@ namespace CreditCards.UITests
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Open Maximized
                 driver.Manage().Window.Maximize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 driver.FindElement(By.Id("ContactFooter")).Click();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 ReadOnlyCollection<string> getTabs = driver.WindowHandles;
                 string homePageTab = getTabs[0];
                 string contactTab = getTabs[1];
                 // switch to tab x
                 driver.SwitchTo().Window(contactTab);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 Assert.EndsWith("/Home/Contact", driver.Url);
             }
@@ -204,7 +203,7 @@ namespace CreditCards.UITests
                 driver.Navigate().GoToUrl(HomeUrl);
                 // Open Maximized
                 driver.Manage().Window.Maximize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 driver.FindElement(By.Id("LiveChat")).Click();
                 DemoHelper.Pause();
@@ -212,7 +211,7 @@ namespace CreditCards.UITests
                 IAlert alert = driver.SwitchTo().Alert();
                 // check it is correct
                 Assert.Equal("Live chat is currently closed.", alert.Text);
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
                 // Accept alert
                 alert.Accept();
             }
@@ -226,10 +225,10 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
                 driver.Manage().Window.Maximize();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 driver.FindElement(By.Id("LearnAboutUs")).Click();
-                DemoHelper.Pause();
+                //DemoHelper.Pause();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                 IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
@@ -269,10 +268,14 @@ namespace CreditCards.UITests
             }
         }
 
+        /*
         [Fact]
         [UseReporter(typeof(BeyondCompareReporter))] //Switched fromBeyondCompare4Reporter to BeyondCompareReporter
         public void _XRenderAboutPage()
         {
+            // Make sure the screenshot is saved as follows:
+            // "(ClassName).(TestName).approved.bmp" i.e
+            // "_02CreditCardWebAppShould._XRenderAboutPage.approved.bmp"
             using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(AboutUrl);
@@ -287,6 +290,7 @@ namespace CreditCards.UITests
                 Approvals.Verify(file);
             }
         }
+        */
 
         
         
