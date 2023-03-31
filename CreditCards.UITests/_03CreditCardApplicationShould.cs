@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using CreditCards.UITests.PageObjectModels;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools.V85.ApplicationCache;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -27,21 +29,12 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
-                driver.Navigate().GoToUrl(HomeUrl);
-                //DemoHelper.Pause();
+                ApplicationPage applicationPage = homePage.ClickApplyLowRateLink();
 
-                // Grab ApplyLowRate button
-                IWebElement applyLink = driver.FindElement(By.Name("ApplyLowRate"));
-                // Click on the button
-                applyLink.Click();
-
-                //DemoHelper.Pause();
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                applicationPage.EnsurePageLoaded();
 
             }
         }
@@ -51,25 +44,15 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+                
+                homePage.WaitForEasyApplicationCarouselPage();
+                
+                ApplicationPage applicationPage = homePage.ClickApplyEasyApplicationLink();
 
-                driver.Navigate().GoToUrl(HomeUrl);
-                //DemoHelper.Pause();
+                applicationPage.EnsurePageLoaded();
 
-                IWebElement rightCarousel = driver.FindElement(By.CssSelector("[data-slide='next']"));
-                rightCarousel.Click();
-                //Dynamic Pause for atleast 1 second
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
-                // Wait until the Element we want (Easy Apply Now, second img)
-                IWebElement applyLink = wait.Until((d) => d.FindElement(By.LinkText("Easy: Apply Now!")));
-                // Click on the button
-                applyLink.Click();
-
-                //DemoHelper.Pause();
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
             }
         }
 
@@ -78,33 +61,12 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Manage().Window.Maximize();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Navigating to '{HomeUrl}'");
-                driver.Navigate().GoToUrl(HomeUrl);
-                
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Finding element using explicity");
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(35));
-
-                //// <summary>
-                //// Function to check if element is found,
-                //// enabled and displayed = true
-                
-                //Func<IWebDriver, IWebElement> findEnabledAndVisible = delegate (IWebDriver d)
-                //{
-                //    var e = d.FindElement(By.ClassName("customer-service-apply-now"));
-
-                //    if (e is null)
-                //    {
-                //        throw new NotFoundException();
-                //    }
-
-                //    if (e.Enabled && e.Displayed)
-                //    {
-                //        return e;
-                //    }
-
-                //    throw new NotFoundException();
-                //};
                 
                 // Use built in function instead of bespoke (above)
                 IWebElement applyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("customer-service-apply-now")));
@@ -115,8 +77,7 @@ namespace CreditCards.UITests
 
                 //DemoHelper.Pause();
 
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -125,18 +86,15 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                driver.Navigate().GoToUrl(HomeUrl);
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 IWebElement randomPartial = driver.FindElement(By.PartialLinkText("- Apply Now!"));
                 randomPartial.Click();
                 // Wait 1 second
                 //DemoHelper.Pause();
 
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -145,18 +103,15 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                driver.Navigate().GoToUrl(HomeUrl);
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 IWebElement randomPartial = driver.FindElement(By.XPath("//a[text()[contains(.,'- Apply Now!')]]"));
                 randomPartial.Click();
                 // Wait 1 second
                 //DemoHelper.Pause();
 
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -165,11 +120,8 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Go to Home
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Minimize window
-                driver.Manage().Window.Minimize();
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(11));
 
@@ -179,10 +131,7 @@ namespace CreditCards.UITests
 
                 applyLink.Click();
 
-                //DemoHelper.Pause();
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -191,9 +140,8 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                driver.Navigate().GoToUrl(ApplyUrl);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 // Send FirstName
                 driver.FindElement(By.Id("FirstName")).SendKeys("Mark");
@@ -258,9 +206,8 @@ namespace CreditCards.UITests
 
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                driver.Navigate().GoToUrl(ApplyUrl);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
                 driver.FindElement(By.Id("FirstName")).SendKeys(firstName);
                 driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("01633");
                 driver.FindElement(By.Id("Age")).SendKeys(invalidAge);

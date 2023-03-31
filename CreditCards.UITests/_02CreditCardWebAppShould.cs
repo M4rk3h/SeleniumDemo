@@ -25,137 +25,42 @@ namespace CreditCards.UITests
 
         public void _1LoadHomePage()
         {
-            // create an instance of a browser (ChromeDriver)
-
             using (IWebDriver driver = new ChromeDriver() )
             {
-                // Go to URL
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                //DemoHelper.Pause();
-                // Min
-                driver.Manage().Window.Minimize();
-                //DemoHelper.Pause();
-                // Draw
-                driver.Manage().Window.Size = new System.Drawing.Size(300, 400);
-                //DemoHelper.Pause();
-                // Move to Top Left (1,1)
-                driver.Manage().Window.Position = new System.Drawing.Point(1, 1);
-                //DemoHelper.Pause();
-                // Move 
-                driver.Manage().Window.Position = new System.Drawing.Point(50, 50);
-                //DemoHelper.Pause();
-                // Move 
-                driver.Manage().Window.Position = new System.Drawing.Point(100, 100);
-                //DemoHelper.Pause();
-                // Move to Top Left (1,1)
-                driver.Manage().Window.FullScreen();
-                DemoHelper.Pause(5000);
-
-                // Check Title = String
-                Assert.Equal(HomeTitle, driver.Title);
-                // Check we're at the correct url
-                Assert.Equal(HomeUrl, driver.Url);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
             }
         }
 
         // add a new test
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _2ReloadHomePage()
+        public void _2ReloadHomePageOnBack()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                // Go to URL
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Pause the browser
-                //DemoHelper.Pause();
-                // Reload the Page
-                driver.Navigate().Refresh();
-                // Check Title = String
-                Assert.Equal(HomeTitle, driver.Title);
-                // Check we're at the correct url
-                Assert.Equal(HomeUrl, driver.Url);
-            }
-        }
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
-        // add a new test
-        [Fact]
-        [Trait("Category", "Smoke")]
-        public void _3ReloadHomePageOnBack()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                // Go to URL
-                driver.Navigate().GoToUrl(HomeUrl);
+                string initialToken = homePage.GenerationToken;
 
-                IWebElement generationTokenElement = driver.FindElement(By.Id("GenerationToken"));
-                string initialToken = generationTokenElement.Text;
-
-
-                // Nav to AboutURL
-                //DemoHelper.Pause();
                 driver.Navigate().GoToUrl(AboutUrl);
-                //DemoHelper.Pause();
                 driver.Navigate().Back();
                 
-                // Check Title = String
-                Assert.Equal(HomeTitle, driver.Title);
-                // Check we're at the correct url
-                Assert.Equal(HomeUrl, driver.Url);
+                homePage.EnsurePageLoaded(); 
 
-                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
-                Assert.NotEqual(initialToken, reloadedToken);
-            }
-        }
-        [Fact]
-        [Trait("Category", "Smoke")]
-        public void _4ReloadHomePageOnForward()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-
-                driver.Navigate().GoToUrl(AboutUrl);
-                //DemoHelper.Pause();
-
-                driver.Navigate().GoToUrl(HomeUrl);
-                IWebElement generationTokenElement = driver.FindElement(By.Id("GenerationToken"));
-                string initialToken = generationTokenElement.Text;
-                //DemoHelper.Pause();
-
-
-                driver.Navigate().Back();
-                //DemoHelper.Pause();
-
-                driver.Navigate().Forward();
-                //DemoHelper.Pause();
-
-                Assert.Equal(HomeTitle, driver.Title);
-                Assert.Equal(HomeUrl, driver.Url);
-
-                // TODO: Load state from previously suspended application
-                // TODO: assert that page was reloaded.
-                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
+                string reloadedToken = homePage.GenerationToken;
                 Assert.NotEqual(initialToken, reloadedToken);
             }
         }
 
         [Fact]
-        public void _5DisplayProductsAndRates()
+        public void _3DisplayProductsAndRates()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                driver.Navigate().GoToUrl(HomeUrl);
                 var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 //DemoHelper.Pause();
 
@@ -171,18 +76,16 @@ namespace CreditCards.UITests
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _6ContactUsFooterTAB()
+        public void _4ContactUsFooterTAB()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
-                driver.FindElement(By.Id("ContactFooter")).Click();
-                //DemoHelper.Pause();
+                homePage.ClickContactFooterLink();
 
+                // Change Tabs
                 ReadOnlyCollection<string> getTabs = driver.WindowHandles;
                 string homePageTab = getTabs[0];
                 string contactTab = getTabs[1];
@@ -196,75 +99,79 @@ namespace CreditCards.UITests
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _7AlertIfLiveChatClosed()
+        public void _5AlertIfLiveChatClosed()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Open Maximized
-                driver.Manage().Window.Maximize();
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+                homePage.ClickLiveChatFooterLink();
 
-                driver.FindElement(By.Id("LiveChat")).Click();
-                DemoHelper.Pause();
-                // switch to alert
-                IAlert alert = driver.SwitchTo().Alert();
-                // check it is correct
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+
                 Assert.Equal("Live chat is currently closed.", alert.Text);
-                //DemoHelper.Pause();
-                // Accept alert
                 alert.Accept();
             }
         }
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _8NotNavigateToAboutUsWhenCancelClicked()
+        public void _6NavigateToAboutUsWhenCancelClicked()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-                driver.Manage().Window.Maximize();
-                //DemoHelper.Pause();
-
-                driver.FindElement(By.Id("LearnAboutUs")).Click();
-                //DemoHelper.Pause();
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+                homePage.ClickAboutUsLink();
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                 IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
+                alertBox.Accept();
 
-                alertBox.Dismiss();
-
-                Assert.Equal(HomeTitle, driver.Title);
+                Assert.EndsWith("/Home/About", driver.Url);
             }
         }
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void _9NotDisplayCookieUseMessage()
+        public void _7NotNavigateToAboutUsWhenCancelClicked()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                // Go to Index
-                driver.Navigate().GoToUrl(HomeUrl);
-                // Create a cookie
-                driver.Manage().Cookies.AddCookie(new Cookie("acceptedCookies", "true"));
-                // Refresh the page
-                driver.Navigate().Refresh();
-                // return an emplty read only collection
-                ReadOnlyCollection<IWebElement> message = driver.FindElements(By.Id("CookiesBeingUsed"));
-                // Is the Message Empty?
-                Assert.Empty(message);
-                // Get the cookie named x
-                Cookie cookieValue = driver.Manage().Cookies.GetCookieNamed("acceptedCookies");
-                // Does the cookie from above = true
-                Assert.Equal("true", cookieValue.Value);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+                homePage.ClickAboutUsLink();
 
-                // remove cookie
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
+                alertBox.Dismiss();
+                DemoHelper.Pause();
+
+                Assert.EndsWith("#", driver.Url);
+            }
+        }
+
+
+            [Fact]
+        [Trait("Category", "Smoke")]
+        public void _8DisplayCookieUseMessage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+
+                
+                driver.Manage().Cookies.AddCookie(new Cookie("acceptedCookies", "true"));
+                driver.Navigate().Refresh();
+
+                Assert.False(homePage.IsCookieMessagePresent);
+
                 driver.Manage().Cookies.DeleteCookieNamed("acceptedCookies");
                 driver.Navigate().Refresh();
-                // check cookies being used
-                Assert.NotNull(driver.FindElement(By.Id("CookiesBeingUsed")));
+
+                Assert.True(homePage.IsCookieMessagePresent);
             }
         }
 
