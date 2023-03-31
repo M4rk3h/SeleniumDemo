@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpectedConditions.cs" />
+    <Compile Include="PageObjectModels\HomePage.cs" />
     <Compile Include="_04JavaScriptExamples.cs" />
     <Compile Include="_01DriverManagerTest.cs" />
     <Compile Include="_03CreditCardApplicationShould.cs" />
