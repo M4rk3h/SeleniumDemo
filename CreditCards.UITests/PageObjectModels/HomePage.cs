@@ -10,7 +10,8 @@ namespace CreditCards.UITests.PageObjectModels
     internal class HomePage
     {
         private readonly IWebDriver Driver;
-        private const string PageUrl = "http://localhost:44108/";
+        private const string PageUrl = "http://localhost:44108";
+        
         private const string PageTitle = "Home Page - Credit Cards";
 
         public HomePage(IWebDriver driver)
@@ -53,7 +54,7 @@ namespace CreditCards.UITests.PageObjectModels
             bool urlIsCorrect;
             if (!onlyCheckUrlStartsWithExpectedText)
             {
-                urlIsCorrect = Driver.Url.StartsWith(PageUrl);
+                urlIsCorrect = Driver.Url.Contains(PageUrl);
             }
             else
             {

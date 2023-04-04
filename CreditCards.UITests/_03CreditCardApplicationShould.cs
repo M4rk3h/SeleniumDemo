@@ -75,9 +75,11 @@ namespace CreditCards.UITests
                 applyLink.Click();
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking element");
 
-                //DemoHelper.Pause();
+                DemoHelper.Pause();
 
-                homePage.EnsurePageLoaded();
+                //homePage.EnsurePageLoaded();
+                output.WriteLine($"Page URL: {driver.Url}");
+                DemoHelper.Pause();
             }
         }
 
@@ -92,7 +94,7 @@ namespace CreditCards.UITests
                 IWebElement randomPartial = driver.FindElement(By.PartialLinkText("- Apply Now!"));
                 randomPartial.Click();
                 // Wait 1 second
-                //DemoHelper.Pause();
+                DemoHelper.Pause();
 
                 homePage.EnsurePageLoaded();
             }

@@ -15,9 +15,7 @@ namespace CreditCards.UITests
     public class _02CreditCardWebAppShould
     {
         // Declare Constants
-        private const string HomeUrl = "http://localhost:44108/";
         private const string AboutUrl = "http://localhost:44108/Home/About";
-        private const string HomeTitle = "Home Page - Credit Cards";
         
         // add a test
         [Fact]
