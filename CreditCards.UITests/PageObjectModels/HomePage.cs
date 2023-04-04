@@ -10,7 +10,7 @@ namespace CreditCards.UITests.PageObjectModels
     internal class HomePage
     {
         private readonly IWebDriver Driver;
-        private const string PageUrl = "http://localhost:44108";
+        private const string PageUrl = "http://localhost:44108/";
         
         private const string PageTitle = "Home Page - Credit Cards";
 
@@ -49,12 +49,16 @@ namespace CreditCards.UITests.PageObjectModels
             EnsurePageLoaded();
         }
 
+        /// <summary>
+        /// Checks that the URL and page title are as expected
+        /// </summary>
+        /// <param name="onlyCheckUrlStartsWithExpectedText">Set to false to do an exact match of URL. Set to true to ignore fragments, query string, etc at end of browser URL</param>
         public void EnsurePageLoaded(bool onlyCheckUrlStartsWithExpectedText = true)
         {
             bool urlIsCorrect;
-            if (!onlyCheckUrlStartsWithExpectedText)
+            if (onlyCheckUrlStartsWithExpectedText)
             {
-                urlIsCorrect = Driver.Url.Contains(PageUrl);
+                urlIsCorrect = Driver.Url.StartsWith(PageUrl);
             }
             else
             {
@@ -64,7 +68,7 @@ namespace CreditCards.UITests.PageObjectModels
             bool pageHasLoaded = urlIsCorrect && (Driver.Title == PageTitle);
             if (!pageHasLoaded)
             {
-                throw new Exception($"Failed to load page. Page URL = '{Driver.Url}' Page Source: \r\n {Driver.PageSource}");
+                throw new Exception($"Failed to load page. Page URL = '{Driver.Url}'");
             }
         }
 
