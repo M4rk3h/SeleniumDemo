@@ -154,6 +154,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChromeDriverFixture.cs" />
     <Compile Include="ExpectedConditions.cs" />
     <Compile Include="PageObjectModels\ApplicationCompletePage.cs" />
     <Compile Include="PageObjectModels\ApplicationPage.cs" />
