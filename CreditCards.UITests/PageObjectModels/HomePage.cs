@@ -11,7 +11,6 @@ namespace CreditCards.UITests.PageObjectModels
     {
         private readonly IWebDriver Driver;
         private const string PageUrl = "http://localhost:44108/";
-        
         private const string PageTitle = "Home Page - Credit Cards";
 
         public HomePage(IWebDriver driver)
@@ -24,9 +23,7 @@ namespace CreditCards.UITests.PageObjectModels
             get
             {
                 var products = new List<(string name, string interestRate)>();
-
                 var productCells = Driver.FindElements(By.TagName("td"));
-
                 for (int i = 0; i < productCells.Count - 1; i += 2) 
                 {
                     string name = productCells[i].Text;
@@ -87,13 +84,7 @@ namespace CreditCards.UITests.PageObjectModels
         public void WaitForEasyApplicationCarouselPage()
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(11));
-
             IWebElement applyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
-
         }
-
-
-
-
     }
 }
