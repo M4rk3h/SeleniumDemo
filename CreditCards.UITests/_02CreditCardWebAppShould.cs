@@ -4,6 +4,7 @@ using CreditCards.UITests.PageObjectModels;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.ObjectModel;
@@ -23,7 +24,7 @@ namespace CreditCards.UITests
 
         public void _1LoadHomePage()
         {
-            using (IWebDriver driver = new ChromeDriver() )
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -35,7 +36,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _2ReloadHomePageOnBack()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -53,9 +54,10 @@ namespace CreditCards.UITests
         }
 
         [Fact]
+        [Trait("Category", "Smoke")]
         public void _3DisplayProductsAndRates()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -76,7 +78,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _4ContactUsFooterTAB()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -99,7 +101,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _5AlertIfLiveChatClosed()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -117,7 +119,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _6NavigateToAboutUsWhenCancelClicked()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -135,7 +137,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _7NotNavigateToAboutUsWhenCancelClicked()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -155,7 +157,7 @@ namespace CreditCards.UITests
         [Trait("Category", "Smoke")]
         public void _8DisplayCookieUseMessage()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 var homePage = new HomePage(driver);
                 homePage.NavigateTo();
@@ -181,7 +183,7 @@ namespace CreditCards.UITests
             // Make sure the screenshot is saved as follows:
             // "(ClassName).(TestName).approved.bmp" i.e
             // "_02CreditCardWebAppShould._XRenderAboutPage.approved.bmp"
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 driver.Navigate().GoToUrl(AboutUrl);
 

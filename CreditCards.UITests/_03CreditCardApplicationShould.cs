@@ -1,6 +1,5 @@
 ﻿using CreditCards.UITests.PageObjectModels;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
@@ -10,24 +9,24 @@ namespace CreditCards.UITests
 {
     // Add Test
     [Trait("Category", "Applications")]
-    public class _03CreditCardApplicationShould : IClassFixture<ChromeDriverFixture>
+    public class _03CreditCardApplicationShould : IClassFixture<FirefoxDriverFixture>
     {
         private const string HomeUrl = "http://localhost:44108/";
         private const string ApplyUrl = "http://localhost:44108/Apply";
-        private readonly ChromeDriverFixture ChromeDriverFixture;
+        private readonly FirefoxDriverFixture FirefoxDriverFixture;
 
-        public _03CreditCardApplicationShould(ChromeDriverFixture chromeDriverFixture)
+        public _03CreditCardApplicationShould(FirefoxDriverFixture firefoxDriverFixture)
         {
-            ChromeDriverFixture = chromeDriverFixture;
-            ChromeDriverFixture.Driver.Manage().Cookies.DeleteAllCookies();
-            ChromeDriverFixture.Driver.Navigate().GoToUrl("about:blank");
+            FirefoxDriverFixture = firefoxDriverFixture;
+            FirefoxDriverFixture.Driver.Manage().Cookies.DeleteAllCookies();
+            FirefoxDriverFixture.Driver.Navigate().GoToUrl("about:blank");
 
         }
 
         [Fact]
         public void _1BeInitiatedFromHomePage_NewLowRate()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
             ApplicationPage applicationPage = homePage.ClickApplyLowRateLink();
             applicationPage.EnsurePageLoaded();
@@ -37,7 +36,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _2BeInitiatedFromHomePage_EasyApplication()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
             homePage.WaitForEasyApplicationCarouselPage();
             ApplicationPage applicationPage = homePage.ClickApplyEasyApplicationLink();
@@ -47,10 +46,10 @@ namespace CreditCards.UITests
         [Fact]
         public void _3BeInitiatedFromHomePage_CustomerService()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
             
-            WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(35));
+            WebDriverWait wait = new WebDriverWait(FirefoxDriverFixture.Driver, TimeSpan.FromSeconds(35));
             // Use built in function instead of bespoke (above)
             IWebElement applyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("customer-service-apply-now")));
             
@@ -61,40 +60,40 @@ namespace CreditCards.UITests
         [Fact]
         public void _4BeInitiatedFromHomePage_RandomGreeting()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
 
-            IWebElement randomPartial = ChromeDriverFixture.Driver.FindElement(By.PartialLinkText("- Apply Now!"));
+            IWebElement randomPartial = FirefoxDriverFixture.Driver.FindElement(By.PartialLinkText("- Apply Now!"));
             randomPartial.Click();
             // Wait 1 second
             DemoHelper.Pause();
 
-            var appPage = new ApplicationPage(ChromeDriverFixture.Driver);
+            var appPage = new ApplicationPage(FirefoxDriverFixture.Driver);
             appPage.EnsurePageLoaded();
         }
 
         [Fact]
         public void _5BeInitiatedFromHomePage_RandomGreeting_XPath()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
 
-            IWebElement randomPartial = ChromeDriverFixture.Driver.FindElement(By.XPath("//a[text()[contains(.,'- Apply Now!')]]"));
+            IWebElement randomPartial = FirefoxDriverFixture.Driver.FindElement(By.XPath("//a[text()[contains(.,'- Apply Now!')]]"));
             randomPartial.Click();
             // Wait 1 second
             //DemoHelper.Pause();
 
-            var appPage = new ApplicationPage(ChromeDriverFixture.Driver);
+            var appPage = new ApplicationPage(FirefoxDriverFixture.Driver);
             appPage.EnsurePageLoaded();
         }
 
         [Fact]
         public void _6BIFHP_EA_PC()
         {
-            var homePage = new HomePage(ChromeDriverFixture.Driver);
+            var homePage = new HomePage(FirefoxDriverFixture.Driver);
             homePage.NavigateTo();
             DemoHelper.Pause();
-            WebDriverWait wait = new WebDriverWait(ChromeDriverFixture.Driver, TimeSpan.FromSeconds(11));
+            WebDriverWait wait = new WebDriverWait(FirefoxDriverFixture.Driver, TimeSpan.FromSeconds(11));
 
             // The below method is depreciated - source code copied into ExpectedConditions.cs
             // from https://github.com/DotNetSeleniumTools/DotNetSeleniumExtras/blob/master/src/WaitHelpers/ExpectedConditions.cs
@@ -102,7 +101,7 @@ namespace CreditCards.UITests
             applyLink.Click();
             DemoHelper.Pause();
 
-            var appPage = new ApplicationPage(ChromeDriverFixture.Driver);
+            var appPage = new ApplicationPage(FirefoxDriverFixture.Driver);
             appPage.EnsurePageLoaded();
         }
 
@@ -115,7 +114,7 @@ namespace CreditCards.UITests
             const string Age = "30";
             const string Income = "50000";
 
-            var applicationPage = new ApplicationPage(ChromeDriverFixture.Driver);
+            var applicationPage = new ApplicationPage(FirefoxDriverFixture.Driver);
             applicationPage.NavigateTo();
 
             applicationPage.EnterFirstName(FirstName);
@@ -150,7 +149,7 @@ namespace CreditCards.UITests
             
             // Get and Set ApplicationPage
             // Get Driver from ApplicationPage and go to correct URL.
-            var applicationPage = new ApplicationPage(ChromeDriverFixture.Driver);
+            var applicationPage = new ApplicationPage(FirefoxDriverFixture.Driver);
             applicationPage.NavigateTo();
             // Fill out the form
             applicationPage.EnterFirstName(firstName);

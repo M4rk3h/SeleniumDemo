@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using Xunit;
 
 namespace CreditCards.UITests
@@ -10,7 +11,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _1ClickOverlayedLink()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 driver.Navigate().GoToUrl("http://localhost:44108/jsoverlay.html");
                 //DemoHelper.Pause();
@@ -29,7 +30,7 @@ namespace CreditCards.UITests
         [Fact]
         public void _2ClickOverlayedLinkText()
         {
-            using (IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new EdgeDriver())
             {
                 driver.Navigate().GoToUrl("http://localhost:44108/jsoverlay.html");
                 //DemoHelper.Pause();
