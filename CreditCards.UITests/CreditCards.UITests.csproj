@@ -216,7 +216,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props'))" />
-    <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.120.0.6099.10900\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.120.0.6099.10900\build\Selenium.WebDriver.ChromeDriver.targets'))" />
     <Error Condition="!Exists('..\packages\EmptyFiles.8.1.0\build\EmptyFiles.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmptyFiles.8.1.0\build\EmptyFiles.targets'))" />
     <Error Condition="!Exists('..\packages\ApprovalTests.6.0.0\build\ApprovalTests.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ApprovalTests.6.0.0\build\ApprovalTests.props'))" />
     <Error Condition="!Exists('..\packages\ApprovalTests.6.0.0\build\ApprovalTests.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ApprovalTests.6.0.0\build\ApprovalTests.targets'))" />
@@ -225,11 +224,12 @@
     <Error Condition="!Exists('..\packages\xunit.core.2.6.6\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.6.6\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.6.6\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.6.6\build\xunit.core.targets'))" />
     <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.5.6\build\net462\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.5.6\build\net462\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.126.0.6478.12600\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.126.0.6478.12600\build\Selenium.WebDriver.ChromeDriver.targets'))" />
   </Target>
-  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.120.0.6099.10900\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.120.0.6099.10900\build\Selenium.WebDriver.ChromeDriver.targets')" />
   <Import Project="..\packages\EmptyFiles.8.1.0\build\EmptyFiles.targets" Condition="Exists('..\packages\EmptyFiles.8.1.0\build\EmptyFiles.targets')" />
   <Import Project="..\packages\ApprovalTests.6.0.0\build\ApprovalTests.targets" Condition="Exists('..\packages\ApprovalTests.6.0.0\build\ApprovalTests.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.4.16.2\build\Selenium.WebDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.4.16.2\build\Selenium.WebDriver.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.GeckoDriver.0.34.0\build\Selenium.WebDriver.GeckoDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.GeckoDriver.0.34.0\build\Selenium.WebDriver.GeckoDriver.targets')" />
   <Import Project="..\packages\xunit.core.2.6.6\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.6.6\build\xunit.core.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.126.0.6478.12600\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.126.0.6478.12600\build\Selenium.WebDriver.ChromeDriver.targets')" />
 </Project>
